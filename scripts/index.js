@@ -4,7 +4,7 @@ const giftbox = document.getElementById('merrywrap');
 const canvasC = document.getElementById('c');
 
 const config = {
-  birthdate: 'November 16, 2025',
+  birthdate: 'April 25',
   name: 'Sossyy'
 };
 
@@ -26,7 +26,24 @@ const second = 1000,
   hour = minute * 60,
   day = hour * 24;
 
-let countDown = new Date(`${config.birthdate} 00:00:00`).getTime();
+const nowDate = new Date();
+let year = nowDate.getFullYear();
+
+// birthday this year
+let countDown = new Date(`${config.birthdate} ${year} 00:00:00`);
+
+// remove time (important)
+let today = new Date(year, nowDate.getMonth(), nowDate.getDate());
+let birthdayThisYear = new Date(year, countDown.getMonth(), countDown.getDate());
+
+// if birthday passed → next year
+if (today > birthdayThisYear) {
+  countDown = new Date(`${config.birthdate} ${year + 1} 00:00:00`);
+}
+
+// convert to timestamp
+countDown = countDown.getTime();
+
 x = setInterval(function() {
   let now = new Date().getTime(),
     distance = countDown - now;
@@ -448,56 +465,17 @@ x = setInterval(function() {
     ctx.font = opts.charSize + 'px Verdana';
   });
 
-//   if (distance > 0) {
-//     head.style.display = 'initial';
-//     count.style.display = 'initial';
-//   } else {
-//     head.style.display = 'none';
-//     count.style.display = 'none';
-//     giftbox.style.display = 'initial';
-//     clearInterval(x);
-//     let merrywrap = document.getElementById('merrywrap');
-//     let box = merrywrap.getElementsByClassName('giftbox')[0];
-//     let step = 1;
-//     let stepMinutes = [2000, 2000, 1000, 1000];
-
-//     function init() {
-//       box.addEventListener('click', openBox, false);
-//       box.addEventListener('click', showfireworks, false);
-//     }
-
-//     function stepClass(step) {
-//       merrywrap.className = 'merrywrap';
-//       merrywrap.className = 'merrywrap step-' + step;
-//     }
-
-//     function openBox() {
-//       setTimeout(callBack_func, 15000);
-// function callBack_func() {
-//    document.location.href = "bday.html";
-// }
-//       if (step === 1) {
-//         box.removeEventListener('click', openBox, false);
-//       }
-//       stepClass(step);
-//       if (step === 3) {
-//       }
-//       if (step === 4) {
-//         return;
-//       }
-//       setTimeout(openBox, stepMinutes[step - 1]);
-//       step++;
-
-//       //   setTimeout(anim, 1900);
-//     }
-
-//     function showfireworks() {
-//       canvasC.style.display = 'initial';
-//       setTimeout(anim, 1500);
-//     }
-
-//     init();
-//   }
+  if (distance > 0) {
+    head.style.display = 'initial';
+    count.style.display = 'initial';
+  } else {
+    head.style.display = 'none';
+    count.style.display = 'none';
+    giftbox.style.display = 'initial';
+    canvasC.style.display = 'initial';
+    clearInterval(x);
+    setTimeout(anim, 1500);
+  }
 
   // if (distance < 0) {
   //     clearInterval(x);
@@ -505,10 +483,10 @@ x = setInterval(function() {
   // }
 
 // Always show the animation (no countdown logic)
-head.style.display = 'none';
-count.style.display = 'none';
-giftbox.style.display = 'initial';
-canvasC.style.display = 'initial';
+// head.style.display = 'none';
+// count.style.display = 'none';
+// giftbox.style.display = 'initial';
+// canvasC.style.display = 'initial';
 
 let merrywrap = document.getElementById('merrywrap');
 let box = merrywrap.getElementsByClassName('giftbox')[0];
